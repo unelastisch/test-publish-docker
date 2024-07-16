@@ -1,0 +1,24 @@
+name: release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_IMAGE_NAME: "docker.elastic.co/observability/apm-agent-dotnet"
+    steps:
+      - name: Extract metadata (tags, labels)
+        id: docker-meta
+        uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81  # v5.5.1
+        with:
+          images: ${{ env.DOCKER_IMAGE_NAME }}
+          flavor: |
+            latest=auto
+          tags: |
+            type=semver,pattern={{version}},value=1.28.0
+            type=edge
+      - name: debug
+        run: echo ${{ steps.docker-meta.outputs.tags }}
