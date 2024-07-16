@@ -21,4 +21,4 @@ jobs:
             type=semver,pattern={{version}},value=1.28.0
             type=edge
       - name: debug
-        run: echo ${{ steps.docker-meta.outputs.tags }}
+        run: echo "${{ steps.docker-meta.outputs.tags }}"
